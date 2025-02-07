@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]  # New standard
+build-backend = "hatchling.build"
+
+[project]
+name = "filip_opper_playground"
+version = "0.0.1"
+authors = [
+  { name="filip", email="filip.pontus.stenbeck@gmail.com" },
+]
+
+dependencies = [  # Få med dependencies (istället för requirment.txt)
+    "opperai",
+    "streamlit",
+    "PyPDF2"
+]
+
+description = "Playground for testing opper API."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
