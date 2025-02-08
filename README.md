@@ -17,4 +17,3 @@ OPPER_API_KEY=<enter your key>
 cd scripts
 streamlit run main.py
 ```
-
