@@ -4,12 +4,17 @@ from dotenv import load_dotenv
 from filip_opper_playground.input import InputType, Input, display_download_pdf, display_uploaded_pdf
 from filip_opper_playground.trigger import Trigger, TriggerType
 from filip_opper_playground.translate import TranslateModel, Translate
+from filip_opper_playground.reason import ReasonModel, Reason
 from filip_opper_playground.summary import Summary, SummaryModel
 from filip_opper_playground.pipieline import Pipeline
 
 pipeline = Pipeline()
 node_id = 0
 load_dotenv()
+
+st.header("Opper - Web GUI concept")
+st.text("Showcase how to build a pipeline in the web gui and execute it. "
+        "Demonstrating with loading in pdf then summarize then translate with Opper API.")
 
 tab1, tab2, tab3 = st.tabs(["Add Nodes", "Modify pipeline", "Run pipeline"])
 
@@ -62,6 +67,15 @@ with tab1:
             if prompt is not None:
                 active_node.prompt = prompt
 
+        if node_selected == "reason":
+            # Display trigger type dropdown
+            model, prompt = ReasonModel.display()
+            if model is not None:
+                active_node = Reason(node_id=node_id, model=model)
+                active_node.prompt = prompt
+            if prompt is not None:
+                active_node.prompt = prompt
+
 
     if st.button("Add node"):
         if active_node:
@@ -76,5 +90,8 @@ with tab2:
 with tab3:
     if st.button("RUN PIPELINE"):
         st.write(pipeline.execute())
+
+    if st.toggle("Show as python script"):
+        code = st.code(pipeline.to_python())
 
 st.write(pipeline.render())

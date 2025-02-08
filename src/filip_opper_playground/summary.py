@@ -6,10 +6,12 @@ from opperai import AsyncOpper, trace
 
 
 class SummaryModel(Enum):
+    OPPER_MISTRAL_NEMO = "opper/mistral-nemo-instruct"
     GROQ_DS_R1_70B = "groq/deepseek-r1-distill-llama-70b"
     FIREWORKS_DEEPSEEK_R1 = "fireworks/deepseek-r1"
     GEMINI_1121 = "gcp/gemini-exp-1121"
     GEMINI_1114 = "gcp/gemini-exp-1114"
+    DEFAULT = "DEFAULT"
 
     @classmethod
     def get_values(cls) -> List[str]:

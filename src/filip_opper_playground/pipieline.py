@@ -62,7 +62,20 @@ class Pipeline:
     def to_python(self):
         """ Creates a python script from the pipeline object that can be executed independently.
         Loops through the pipeline array and looks at all nodes in the pipeline"""
-        # TODO
+        code = f"""
+        import streamlit as st
+        from dotenv import load_dotenv
+        
+        from filip_opper_playground.input import InputType, Input, display_download_pdf, display_uploaded_pdf
+        from filip_opper_playground.trigger import Trigger, TriggerType
+        from filip_opper_playground.translate import TranslateModel, Translate
+        from filip_opper_playground.reason import ReasonModel, Reason
+        from filip_opper_playground.summary import Summary, SummaryModel
+        from filip_opper_playground.pipieline import Pipeline
+        
+        # TODO 
+        """
+        return code
 
     def render(self):
         """ Loops through all nodes in the pipeline and renders a streamlit graph with all elements in the pipeline array. """

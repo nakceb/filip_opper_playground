@@ -5,13 +5,9 @@ import logging
 from opperai import AsyncOpper, trace
 
 
-class TranslateModel(Enum):
-    OPPER_MISTRAL_NEMO = "opper/mistral-nemo-instruct"
+class ReasonModel(Enum):
     GROQ_DS_R1_70B = "groq/deepseek-r1-distill-llama-70b"
-    ANTHROPIC_CLAUDE_3_HAIKU = "anthropic/claude-3-haiku"
     FIREWORKS_DEEPSEEK_R1 = "fireworks/deepseek-r1"
-    GEMINI_1121 = "gcp/gemini-exp-1121"
-    GEMINI_1114 = "gcp/gemini-exp-1114"
     DEFAULT = "DEFAULT"
 
     @classmethod
@@ -24,27 +20,28 @@ class TranslateModel(Enum):
 
     @staticmethod
     def display():
-        defalut_value = Translate(0, TranslateModel.DEFAULT).prompt
+        defalut_value = Reason(0, ReasonModel.DEFAULT).prompt
         prompt = st.text_input(label="Instruction prompt", value=defalut_value)
         model = st.selectbox(
             "Select Model",
-            TranslateModel.get_values(),
+            ReasonModel.get_values(),
             format_func=str
         )
         return model, prompt
 
-class Translate:
+class Reason:
     def __init__(
             self,
             node_id: int,
-            model: TranslateModel
+            model: ReasonModel
     ):
-        self.name = "Translate"
+        self.name = "Reason"
         self.as_coroutine = True  # expected to be called with asyncio
         self.node_id = node_id
         self.model = model
-        self.prompt = "Translate this to english:"
+        self.prompt = ""
 
+    @trace
     async def call(self, text_input) -> bool:
         """
         :return:
@@ -52,10 +49,10 @@ class Translate:
         opper = AsyncOpper()
 
         model = str(self.model)
-        if self.model == TranslateModel.DEFAULT:
+        if self.model == ReasonModel.DEFAULT:
             model = None
         res, _ = await opper.call(
-            name="Translate",
+            name="Reason",
             instructions=self.prompt,
             input=text_input,
             model=model
